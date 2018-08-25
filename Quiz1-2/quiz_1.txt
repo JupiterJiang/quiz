@@ -1,0 +1,149 @@
+﻿1、float型float f=3.4是否正确?
+答：不正确。
+//需要用强制类型转换，float f=(float)3.4 或float f = 3.4f 
+//有精度损失
+//没小数点的默认是int,有小数点的默认是 double; 
+
+2、当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，
+并可返回变化后的结果，那么这里到底是值传递还是引用传递?
+答：值传递。
+/*当一个对象实例作为一个参数被传递到方法中时，
+参数的值就是该对象的引用一个副本。指向同一个对象,对象的内容可以在
+被调用的方法中改变，但对象的引用(不是引用的副本)是不改变的。*/
+
+3、在Java中一个类被声明为final类型，表示了什么意思?
+答：不能被当作父类继承，如String类
+
+4、Error与Exception有什么区别?
+答：Error类一般是指与虚拟机相关的问题，如系统崩溃，虚拟机错误，内存空间不足，方法调用栈溢出等
+Exception类表示程序可以处理的异常，可以捕获且可能恢复
+
+5、谈谈final, finally的区别。
+答：final修饰的类不能作为父类而被子类继承。
+finally是在异常处理时提供finally块来执行任何清除操作。不管有没有异常被抛出、捕获，finally块都会被执行。
+
+6、String s = new String(“xyz“);创建了几个String Object?
+答：一个或两个。
+/*通过new产生一个字符串“xyz”时，会先去常量池中查找是否已经有了“xyz”对象，
+如果没有则在常量池中创建一个此字符串对象，然后堆中再创建一个常量池中此“xyz”对象的拷贝对象。*/
+
+7、short s1 = 1; s1 = s1 + 1;有什么错? short s1 = 1; s1 += 1;有什么错?
+答：前者类型不匹配，需强制转换；short s1 = 1; s1 =（short）（ s1 + 1）
+后者正确。复合赋值表达式自动地将所执行计算的结果转型为其左侧变量的类型
+//（x += i）表达式使用的是复合赋值操作符。复合赋值（E1 op=E2）等价于简单赋值（E1=(T)((E1) op (E2))），
+//其中T是E1的类型
+
+8、数组有没有length()这个方法? String有没有length()这个方法?
+答：数组没有length()这个方法，但可用length属性求数组长度，String有length()方法。
+//集合求长度用size()方法
+
+9、Overload和Override的区别
+答：区别如下：
+Overload重载是指同样的一个方法能够根据输入数据的数量、类型的不同，做出不同的处理
+Override重写（覆盖）是指当子类继承自父类的相同方法，输入数据一样，但要做出有别于父类的响应
+
+10、abstract class和interface有什么区别?
+答：区别如下：
+（1）abstract class 在 Java 语言中表示的是一种继承关系，一个类只能使用一次继承关系。但是，一个类却可以实现多个 interface。 
+（2）在 abstract class 中可以有自己的数据成员，也可以有非 abstarct 的成员方法，而在 interface 中，所有的成员方法都是 abstract 的。
+ 
+11、构造器Constructor是否可被override?
+答：不可被override，但可以overload；并且子类在初始化时需要调用父类构造器，具体初始化顺序见13题。
+
+12、是否可以继承String类?
+查看String类可知 public final class String implements...
+由final可知无法继承
+
+13、请问输出什么结果
+父类
+public class FatherClass{
+	public FatherClass(){
+		System.out.println("FatherClass Creat");
+	}
+}
+子类
+public class ChildClass extends FatherClass{
+	public ChildClass(){
+		System.out.println("ChildClass Creat");
+	}
+	public static void main(String[] args){
+		FatherClass fc = new FatherClass();
+		ChildClass cc = new ChildClass();
+	}
+}
+输出结果：
+FatherClass Creat
+FatherClass Creat
+ChildClass Creat
+//初始化顺序
+/*1，在类加载的时候执行父类的static代码块，并且只执行一次（因为类只加载一次）；
+ *2，执行子类的static代码块，并且只执行一次（因为类只加载一次）；
+ *3，执行父类的类成员初始化，并且是从上往下按出现顺序执行。
+ *4，执行父类的构造函数；
+ *5，执行子类的类成员初始化，并且是从上往下按出现顺序执行。
+ *6，执行子类的构造函数。*/
+
+14、多线程有几种实现方法,都是什么?同步有几种实现方法,都是什么?
+答：多线程实现方法：通过实现 Runnable 接口来创建线程，通过继承Thread来创建线程。
+      同步方法：同步代码块（synchronized+锁对象），同步方法（使用synchronized关键字修饰方法）
+
+15、请说出你所知道的线程同步的方法
+（1）wait() 使线程处于等待状态，释放锁对象
+（2）sleep() 使睡眠状态，不释放锁
+（3）notify() 随机唤醒某条处于等待状态的线程
+（4）notifyAll 唤醒所有处于等待状态的线程
+
+
+16、当一个线程进入一个对象的一个synchronized方法后，其它线程是否可进入此对象的其它方法?
+
+17、从下列选项中选择两个正确的答案放在 line 3 中
+public class OuterClass{
+	private double d1 = 1.0;
+	//insert code here
+}
+选择：C D
+class innerOne{
+	double method(){return d1;}
+class innerOne{
+	protected double method(){return d1;}
+
+18、STRING与STRINGBUFFER的区别
+（1）String对象不可以修改，赋值是重新创建对象；StringBuffer对象的内容可以修改。
+（2）StringBuffer类的append方法追加字符串比String类使用操作符连接字符串效率更高，后者需要寻找新的内存空间以容纳更大的字符串。
+（3）StringBuffer是线程安全的。
+
+19、Java类实现序例化的方法是?
+（1）Serializable：一个对象想要被序列化，那么它的类就要实现 此接口，这个对象的所有
+属性（包括private属性、包括其引用的对象）都可以被序列化和反序列化来保存、传递。
+（2）Externalizable：他是Serializable接口的子类，有时我们不希望序列化那么多，可以使用
+这个接口，这个接口的writeExternal()和readExternal()方法可以指定序列化哪些属性;
+
+20、Collection框架中实现比较要实现什么接口?
+Comparable 接口和 Comparator 接口
+
+21、介绍Java中的Collection 框架结构
+集合框架包含内容：
+接口：是代表集合的抽象数据类型。例如 Collection、List、Set、Map 等。之所以定义多个接口，是为了以不同的方式操作集合对象
+实现：是集合接口的具体实现。例如：ArrayList、LinkedList、HashSet、HashMap。
+算法：是实现集合接口的对象里的方法执行的一些有用的计算，例如：搜索和排序，这些算法被称为多态。
+具体框架见本目录下图片“Collection框架结构.jpg”
+
+
+
+22、写一个满足Singleton模式的类出来。
+23、遍历某文件夹下的所有文件目录及文件 (文件夹从命令行输入)
+24、编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 
+但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”
+25、用Java SOCKET编程，实现简单的Echo功能，如：客户端从键盘输入 hi (当用户输出exit 退出程序)，服务端响应为 hi(服务器要求为多线程)
+
+
+	
+		
+
+
+
+
+
+
+
+
