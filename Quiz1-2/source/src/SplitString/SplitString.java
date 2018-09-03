@@ -22,6 +22,7 @@ public class SplitString {
             //判断字节数大小是否符合实际
             if (num <= arr.length && num > 0) {
                 int times = 0;
+				//之所以不能直接判断最后一个的大小来判断是因为会出现连续的汉字
                 for (int i = 0; i < num; i++) {
                     //汉字被打散后为两个负数
                     if (arr[i] < 0) {
